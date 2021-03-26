@@ -16,3 +16,24 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::prefix('admin')->group(function () {
+    Route::resource('users', 'App\Http\Controllers\UserController');
+    Route::resource('apartaments', 'App\Http\Controllers\ApartamentController');
+    Route::resource('residentials', 'App\Http\Controllers\ResidentialController');
+});
+
+/* Route::prefix('customer')->group(function () {
+    Route::resource('users', 'App\Http\Controllers\UserController');
+    Route::resource('apartaments', 'App\Http\Controllers\ApartamentController');
+    Route::resource('residentials', 'App\Http\Controllers\ResidentialController');
+}); */
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
