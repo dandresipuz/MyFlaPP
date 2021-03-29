@@ -9,6 +9,7 @@ return [
     'link-remember_me'          => 'Recuérdame',
     'link-forgot_pass'          => '¿Olvidaste tu contraseña?',
     'link-name'                 => 'Nombre',
+    'link-lastname'             => 'Apellidos',
     'link-confir_password'      => 'Confirmar contraseña',
     'link-phone'                => 'Teléfono',
     'link-birthdate'            => 'Fecha de nacimiento',

@@ -49,11 +49,27 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        $messages = array(
+            'name.required'  => 'El campo "Nombre" es Obligatorio.',
+            'lastname.required'  => 'El campo "Apellidos" es Obligatorio.',
+            'email.required'     => 'El campo "Correo Electrónico" es Obligatorio.',
+            'phone.required'     => 'El campo "Número Telefónico" es Obligatorio.',
+            'birthdate.required' => 'El campo "Fecha de Nacimiento" es Obligatorio.',
+            'gender.required'    => 'El campo "Genero" es Obligatorio.',
+            'address.required'   => 'El campo "Dierección" es Obligatorio.',
+            'password.required'  => 'El campo "Contraseña" es Obligatorio.',
+        );
+
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
+            'name'      => ['required', 'string', 'max:255'],
+            'lastname'  => ['required', 'string', 'max:255'],
+            'email'     => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password'  => ['required', 'string', 'min:8', 'confirmed'],
+            'phone'     => ['required', 'numeric'],
+            'birthdate' => ['required', 'date'],
+            'gender'    => ['required'],
+            'address'   => ['required',],
+        ], $messages);
     }
 
     /**
@@ -65,9 +81,14 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'name'          => $data['name'],
+            'lastname'      => $data['lastname'],
+            'email'         => $data['email'],
+            'phone'         => $data['phone'],
+            'birthdate'     => $data['birthdate'],
+            'gender'        => $data['gender'],
+            'address'       => $data['address'],
+            'password'      => Hash::make($data['password']),
         ]);
     }
 }
