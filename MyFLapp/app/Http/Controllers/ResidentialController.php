@@ -7,15 +7,20 @@ use Illuminate\Http\Request;
 
 class ResidentialController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    /* public function index()
     {
-        //
-    }
+        // $residentials = Residential::paginate(10);
+        // return view('home')->with('residentials', $residentials);
+    } */
 
     /**
      * Show the form for creating a new resource.
@@ -24,7 +29,7 @@ class ResidentialController extends Controller
      */
     public function create()
     {
-        //
+        return view('residentials.create');
     }
 
     /**
@@ -46,7 +51,7 @@ class ResidentialController extends Controller
      */
     public function show(Residential $residential)
     {
-        //
+        return view('residentials.show')->with('residential', $residential);
     }
 
     /**

@@ -17,12 +17,11 @@ class CreateResidentialsTable extends Migration
             $table->id();
             $table->string("name")->unique();
             $table->text("description");
-            $table->string('photo')->default('images/no-residential.png');
+            $table->string('photo')->default('images/residentials/no-residential.png');
             $table->boolean('active')->default(1);
             $table->bigInteger('phone');
             $table->string('address');
             $table->boolean("slider")->default(0);
-            $table->float('price')->default(0);
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->string("city");

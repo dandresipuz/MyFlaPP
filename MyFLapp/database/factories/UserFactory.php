@@ -5,43 +5,60 @@ namespace Database\Factories;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+// use Faker\Generator as Faker;
 
 class UserFactory extends Factory
 {
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
     protected $model = User::class;
 
-    /**
-     * Define the model's default state.
-     *
-     * @return array
-     */
     public function definition()
     {
+        $gender = $this->faker->randomElement($array = array('Female', 'Male'));
+        $photo  = $this->faker->image('public/images/users', 140, 140, 'cats');
+
+        if ($gender == 'Female') {
+            $name = $this->faker->firstNameFemale();
+        } else {
+            $name = $this->faker->firstNameMale();
+        }
         return [
-            'name' => $this->faker->name,
-            'email' => $this->faker->unique()->safeEmail,
+            'gender'            => $gender,
+            'name'              => $name,
+            'lastname'          => $this->faker->lastName(),
+            'email'             => $this->faker->unique()->safeEmail,
+            'phone'             => $this->faker->numberBetween($min = 3101000000, $max = 3202000000),
+            'birthdate'         => $this->faker->dateTimeBetween($starDate = '-60 years', $endDate = '-21 years'),
+            'address'           => $this->faker->streetAddress(),
+            'photo'             => substr($photo, 7),
             'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'remember_token' => Str::random(10),
+            'password'          => bcrypt('customer'), // password
+            'remember_token'    => Str::random(50),
         ];
     }
-
-    /**
-     * Indicate that the model's email address should be unverified.
-     *
-     * @return \Illuminate\Database\Eloquent\Factories\Factory
-     */
-    public function unverified()
-    {
-        return $this->state(function (array $attributes) {
-            return [
-                'email_verified_at' => null,
-            ];
-        });
-    }
 }
+
+
+/* $factory->define(User::class, function (Faker $faker) {
+
+    $gender = $faker->randomElement($array = array('Female', 'Male'));
+    $photo  = $faker->image('public/images/users', 140, 140, 'people');
+
+    if ($gender == 'Female') {
+        $name = $faker->firstNameFemale();
+    } else {
+        $name = $faker->firstNameMale();
+    }
+    return [
+        'gender'            => $gender,
+        'name'              => $name,
+        'lastname'          => $faker->lastName(),
+        'email'             => $faker->unique()->safeEmail,
+        'phone'             => $faker->numberBetween($min = 3101000000, $max = 3202000000),
+        'birthdate'         => $faker->dateTimeBetween($starDate = '-60 years', $endDate = '-21 years'),
+        'address'           => $faker->streetAddress(),
+        'photo'             => substr($photo, 7),
+        'email_verified_at' => now(),
+        'password'          => bcrypt('customer'), // password
+        'remember_token'    => Str::random(50),
+    ];
+}); */

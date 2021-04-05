@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Apartament extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'number',
         'description',
@@ -21,6 +23,6 @@ class Apartament extends Model
         return $this->belongsTo('App\Models\User');
     }
     public function residential(){
-        return $this->habelongsTosMany('App\Models\Residential');
+        return $this->belongsTo('App\Models\Residential');
     }
 }

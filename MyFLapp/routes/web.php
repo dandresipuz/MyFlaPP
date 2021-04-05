@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,10 +19,12 @@ Route::get('/', function () {
 });
 
 
+Auth::routes();
 Route::prefix('admin')->group(function () {
     Route::resource('users', 'App\Http\Controllers\UserController');
     Route::resource('apartaments', 'App\Http\Controllers\ApartamentController');
     Route::resource('residentials', 'App\Http\Controllers\ResidentialController');
+    Route::get('home', [App\Http\Controllers\UserController::class, 'index'])->name('home');
 });
 
 /* Route::prefix('customer')->group(function () {
@@ -29,11 +32,3 @@ Route::prefix('admin')->group(function () {
     Route::resource('apartaments', 'App\Http\Controllers\ApartamentController');
     Route::resource('residentials', 'App\Http\Controllers\ResidentialController');
 }); */
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

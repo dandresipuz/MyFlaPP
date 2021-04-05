@@ -20,7 +20,7 @@ class CreateApartamentsTable extends Migration
             $table->boolean("slider")->default(0);
             $table->float('price')->default(0);
             $table->boolean('active')->default(1);
-            $table->string('photo')->default('images/no-apto.png');
+            $table->string('photo')->default('images/apartaments/no-apto.png');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('residential_id');

@@ -7,15 +7,19 @@ use Illuminate\Http\Request;
 
 class ApartamentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    /*  public function index()
     {
         //
-    }
+    } */
 
     /**
      * Show the form for creating a new resource.
@@ -46,7 +50,7 @@ class ApartamentController extends Controller
      */
     public function show(Apartament $apartament)
     {
-        //
+        return view('apartaments.show')->with('apartament', $apartament);
     }
 
     /**
