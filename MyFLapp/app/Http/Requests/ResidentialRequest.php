@@ -32,7 +32,7 @@ class ResidentialRequest extends FormRequest
                 'phone'         => 'required|numeric',
                 'address'       => 'required',
                 'city'          => 'required',
-                'active'        => 'required',
+                'active'        => 'accepted',
                 'slider'        => 'required',
             ];
         } else {
@@ -44,8 +44,7 @@ class ResidentialRequest extends FormRequest
                 'phone'         => 'required|numeric',
                 'address'       => 'required',
                 'city'          => 'required',
-                'active'        => 'required',
-                'slider'        => 'required',
+
             ];
         }
     }
@@ -58,8 +57,6 @@ class ResidentialRequest extends FormRequest
             'address.required'      => 'El campo ":attribute" es obligatorio.',
             'photo.required'        => 'El campo ":attribute" es obligatorio.',
             'city.required'         => 'El campo ":attribute" es obligatorio.',
-            'active.required'       => 'El campo ":attribute" es obligatorio.',
-            'slider.required'       => 'El campo ":attribute" es obligatorio.',
         ];
     }
 
@@ -72,8 +69,6 @@ class ResidentialRequest extends FormRequest
             'photo'         => 'foto',
             'phone'         => 'teléfono',
             'city'          => 'ciudad',
-            'active'        => 'estado',
-            'silder'        => 'slider',
         ];
     }
 }

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $residential->name)
+@section('title', 'Agregar')
 @section('content')
     <div class="container mt-3">
         <div class="col-md-8 offset-md-2">
@@ -31,6 +31,7 @@
             </nav>
             <form method="POST" action="{{ route('residentials.store') }}" enctype="multipart/form-data">
                 @csrf
+                <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                 <div class="form-group">
                     <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name"
                         value="{{ old('name') }}" placeholder="@lang('general.link-name')" autofocus>
@@ -42,22 +43,11 @@
                     @enderror
                 </div>
                 <div class="form-group">
-                    <input id="lastname" type="text" class="form-control @error('lastname') is-invalid @enderror"
-                        name="lastname" value="{{ old('lastname') }}" placeholder="@lang('general.link-lastname')"
-                        autofocus>
+                    <textarea id="description" type="text" class="form-control @error('description') is-invalid @enderror"
+                        name="description" value="{{ old('description') }}" placeholder="Descripción"
+                        autofocus></textarea>
 
-                    @error('lastname')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email"
-                        value="{{ old('email') }}" placeholder="@lang('general.link-email')">
-
-                    @error('email')
+                    @error('description')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -69,31 +59,6 @@
                         value="{{ old('phone') }}" placeholder="@lang('general.link-phone')">
 
                     @error('phone')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <input id="birthdate" type="date" class="form-control @error('birthdate') is-invalid @enderror"
-                        name="birthdate" value="{{ old('birthdate') }}" placeholder="@lang('general.link-birthdate')">
-
-                    @error('birthdate')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <select name="gender" id="gender" class="form-control @error('gender') is-invalid @enderror">
-                        <option value="">@lang('general.select-value')</option>
-                        <option value="Female" @if (old('gender') == 'Female') selected @endif>@lang('general.select-female')</option>
-                        <option value="Male" @if (old('gender') == 'Male') selected @endif>@lang('general.select-male')</option>
-                    </select>
-
-                    @error('gender')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -134,21 +99,15 @@
                 </div>
 
                 <div class="form-group">
-                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror"
-                        name="password" placeholder="@lang('general.link-password')">
+                    <input id="city" type="text" class="form-control @error('city') is-invalid @enderror" name="city"
+                        value="{{ old('city') }}" placeholder="Ciudad" autofocus>
 
-                    @error('password')
+                    @error('name')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
                     @enderror
                 </div>
-
-                <div class="form-group">
-                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation"
-                        placeholder="@lang('general.link-confir_password')">
-                </div>
-
                 <div class="form-group">
                     <button type="submit" class="btn btn-info btn-block text-uppercase">
                         Guardar
