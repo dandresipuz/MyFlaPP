@@ -10,10 +10,10 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function __construct()
+    /* public function __construct()
     {
         $this->middleware('auth');
-    }
+    } */
     /**
      * Display a listing of the resource.
      *
@@ -25,8 +25,8 @@ class UserController extends Controller
         $residentials = Residential::all();
         $apartaments = Apartament::all();
         return view('home')->with('users', $users)
-                            ->with('residentials', $residentials)
-                            ->with('apartaments', $apartaments);
+            ->with('residentials', $residentials)
+            ->with('apartaments', $apartaments);
     }
 
     /**

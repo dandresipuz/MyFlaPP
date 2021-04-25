@@ -20,12 +20,20 @@ Route::get('/', function () {
 
 
 Auth::routes();
-Route::prefix('admin')->group(function () {
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::resource('users', 'App\Http\Controllers\UserController');
     Route::resource('apartaments', 'App\Http\Controllers\ApartamentController');
     Route::resource('residentials', 'App\Http\Controllers\ResidentialController');
     Route::get('home', [App\Http\Controllers\UserController::class, 'index'])->name('home');
 });
+
+
+/* Route::prefix('admin')->group(function () {
+    Route::resource('users', 'App\Http\Controllers\UserController');
+    Route::resource('apartaments', 'App\Http\Controllers\ApartamentController');
+    Route::resource('residentials', 'App\Http\Controllers\ResidentialController');
+    Route::get('home', [App\Http\Controllers\UserController::class, 'index'])->name('home');
+}); */
 
 /* Route::prefix('customer')->group(function () {
     Route::resource('users', 'App\Http\Controllers\UserController');
