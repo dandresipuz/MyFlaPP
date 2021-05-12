@@ -17,3 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('users/all', 'App\Http\Controllers\Api\UserController@all');
+Route::resource('users', 'App\Http\Controllers\Api\UserController')->only('index', 'show');
+Route::get('residentials/all', 'App\Http\Controllers\Api\ResidentialController@all');
+Route::resource('residentials', 'App\Http\Controllers\Api\ResidentialController')->only('index', 'show');
+Route::get('apartaments/all', 'App\Http\Controllers\Api\ApartamentController@all');
+Route::resource('apartaments', 'App\Http\Controllers\Api\ApartamentController')->only('index', 'show');
