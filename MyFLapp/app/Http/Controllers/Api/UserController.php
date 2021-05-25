@@ -4,11 +4,17 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Api\ApiResponseController;
+use App\Http\Resources\Api\UserResource;
 
 class UserController extends ApiResponseController
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api', ['except' => ['index', 'show', 'all']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -23,19 +29,10 @@ class UserController extends ApiResponseController
 
     public function all()
     {
-        $users = User::get(); // Para paginar usuarios
+        // $users = User::get(); // Para paginar usuarios
         // return response()->json($users);
-        return $this->responseApi($users);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        // return $this->responseApi($users);
+        return UserResource::collection(User::latest()->paginate(10));
     }
 
     /**
@@ -44,9 +41,28 @@ class UserController extends ApiResponseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        //
+        $user = new User;
+        $user->name = $request->name;
+        $user->lastname = $request->lastname;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->birthdate = $request->birthdate;
+        $user->gender = $request->gender;
+        $user->address = $request->address;
+        if ($request->hasFile('photo')) {
+            $file = time() . '.' . $request->photo->extension();
+            $request->photo->move(public_path('images/users/'), $file);
+            $user->photo = 'images/users/' . $file;
+        }
+        $user->name = $request->name;
+        $user->password = bcrypt($request->password);
+
+
+        if ($user->save()) {
+            return $this->responseCreateApi($user);
+        }
     }
 
     /**
@@ -58,18 +74,8 @@ class UserController extends ApiResponseController
     public function show(User $user)
     {
         // return response()->json($user);
-        return $this->responseApi($user);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        // return $this->responseApi($user);
+        return new UserResource($user);
     }
 
     /**
@@ -79,9 +85,25 @@ class UserController extends ApiResponseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, User $user)
     {
-        //
+        $user->name = $request->name;
+        $user->lastname = $request->lastname;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->birthdate = $request->birthdate;
+        $user->gender = $request->gender;
+        $user->address = $request->address;
+        if ($request->hasFile('photo')) {
+            $file = time() . '.' . $request->photo->extension();
+            $request->photo->move(public_path('images/users/'), $file);
+            $user->photo = 'images/users/' . $file;
+        }
+        $user->active = $request->active;
+
+        if ($user->save()) {
+            return $this->responseApi($user);
+        }
     }
 
     /**
@@ -90,8 +112,10 @@ class UserController extends ApiResponseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        if ($user->delete()) {
+            return $this->responseApi($user);
+        }
     }
 }
