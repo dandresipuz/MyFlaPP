@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\User;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
@@ -15,7 +16,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
 
     /**
@@ -32,6 +33,31 @@ class AuthController extends Controller
         }
 
         return $this->respondWithToken($token);
+    }
+
+    public  $loginAfterSignUp = true;
+
+    public  function  register(Request  $request)
+    {
+        $user = new  User;
+        $user->name = $request->name;
+        $user->lastname = $request->lastname;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->birthdate = $request->birthdate;
+        $user->gender = $request->gender;
+        $user->address = $request->address;
+        $user->password = bcrypt($request->password);
+        $user->save();
+
+        if ($this->loginAfterSignUp) {
+            return  $this->login($request);
+        }
+
+        return  response()->json([
+            'status' => 'ok',
+            'data' => $user
+        ], 200);
     }
 
     /**

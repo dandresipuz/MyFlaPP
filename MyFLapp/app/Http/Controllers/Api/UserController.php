@@ -56,7 +56,6 @@ class UserController extends ApiResponseController
             $request->photo->move(public_path('images/users/'), $file);
             $user->photo = 'images/users/' . $file;
         }
-        $user->name = $request->name;
         $user->password = bcrypt($request->password);
 
 
